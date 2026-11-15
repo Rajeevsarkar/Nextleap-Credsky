@@ -35,6 +35,7 @@ const els = {
 
 let lastQuery = "Mumbai"; // Default city: Mumbai loads on launch
 let lastRawText = null;
+let lastData = null;
 let chips = [];
 
 /* ---------- Popular cities ---------- */
@@ -115,6 +116,11 @@ function showError(status, upstreamMessage) {
     msg = upstreamMessage || "Something went wrong while fetching the weather. Retry?";
   }
   showStatus(msg, "error", !navigator.onLine || status !== "empty");
+  // Keep the last successful result visible next to the error (PRD requirement).
+  if (lastData && lastRawText) {
+    renderResult(lastData, lastRawText);
+    showStatus(msg, "error", !navigator.onLine || status !== "empty");
+  }
 }
 
 /* ---------- SkyCred score (0–100, theme only — not a real credit score) ---------- */
@@ -171,6 +177,7 @@ function weatherEmoji(condText, isDay) {
 function renderResult(data, rawText) {
   hideStatus();
   els.card.classList.remove("loading-shimmer");
+  lastData = data;
   lastRawText = rawText;
 
   const loc = data.location || {};
@@ -237,8 +244,7 @@ async function fetchWeather(city) {
         const j = JSON.parse(rawText);
         if (j && j.error && j.error.message) upstreamMsg = j.error.message;
       } catch { /* keep null */ }
-      showError(res.status, upstreamMsg);
-      if (lastRawText) renderJsonOnly(); // keep the previous result's JSON panels
+      showError(res.status, upstreamMsg); // restores the previous result alongside the error
       return;
     }
     const data = JSON.parse(rawText);
@@ -248,15 +254,6 @@ async function fetchWeather(city) {
     if (err && err.name === "AbortError") showError("slow");
     else showError("network");
   }
-}
-
-function renderJsonOnly() {
-  try {
-    els.jsonFormatted.textContent = JSON.stringify(JSON.parse(lastRawText), null, 2);
-  } catch {
-    els.jsonFormatted.textContent = lastRawText;
-  }
-  els.jsonRaw.textContent = lastRawText;
 }
 
 /* ---------- Copy buttons ---------- */
