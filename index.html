@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SkyCred – check the sky's credit score before you step out. Live weather for any city." />
+  <title>SKYCRED · Weather</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛅</text></svg>" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <span class="brand">SKYCRED · Weather</span>
+      <h1>Check the sky's <em>credit score</em> before you step out.</h1>
+    </header>
+
+    <form id="search-form" class="search-row" autocomplete="off">
+      <label class="sr-only" for="city-input">Search for a city</label>
+      <input id="city-input" name="q" type="text" placeholder="Search any city… (e.g. Mumbai)"
+             enterkeyhint="search" />
+      <button type="submit" id="search-btn">Search</button>
+    </form>
+
+    <section class="popular" aria-label="Popular cities">
+      <span class="popular-label">Popular Cities</span>
+      <div class="chips" id="popular-cities"></div>
+    </section>
+
+    <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+
+    <section class="card" id="weather-card" aria-label="Current weather">
+      <div class="card-top">
+        <div>
+          <h2 id="city-name" class="city-name">--</h2>
+          <p id="city-region" class="city-region">&nbsp;</p>
+        </div>
+        <p class="updated" id="updated">Updated: --</p>
+      </div>
+
+      <div class="score-row">
+        <div class="score-ring">
+          <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+            <circle class="ring-bg" cx="60" cy="60" r="52" />
+            <circle class="ring-val" id="score-ring" cx="60" cy="60" r="52" />
+          </svg>
+          <div class="score-num">
+            <span id="score-value">--</span>
+            <small>/100</small>
+          </div>
+        </div>
+        <div class="verdict">
+          <p class="verdict-title">SkyCred Score</p>
+          <p id="verdict" class="verdict-text">--</p>
+          <p id="score-inputs" class="score-inputs"></p>
+        </div>
+        <div class="temp-block">
+          <p class="temp"><span id="temp">--</span><span class="unit">°C</span></p>
+          <p class="feels">Feels like <span id="feels">--</span>°C</p>
+          <p class="condition"><span id="emoji">--</span> <span id="cond-text">--</span></p>
+        </div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile"><span class="tile-label">Humidity</span><span class="tile-val"><span id="humidity">--</span><small>%</small></span></div>
+        <div class="tile"><span class="tile-label">Wind</span><span class="tile-val"><span id="wind">--</span><small>kph</small></span></div>
+        <div class="tile"><span class="tile-label">UV Index</span><span class="tile-val"><span id="uv">--</span></span></div>
+      </div>
+    </section>
+
+    <section class="json-panels" aria-label="API response">
+      <details>
+        <summary>Formatted JSON</summary>
+        <button class="copy-btn" id="copy-formatted">Copy</button>
+        <pre id="json-formatted">--</pre>
+      </details>
+      <details>
+        <summary>Raw JSON</summary>
+        <button class="copy-btn" id="copy-raw">Copy</button>
+        <pre id="json-raw">--</pre>
+      </details>
+    </section>
+
+    <footer class="footer">
+      <p>Powered by <a href="https://www.weatherapi.com/" rel="noopener">WeatherAPI.com</a> · Not a real credit score, just vibes.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

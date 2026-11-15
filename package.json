@@ -1,0 +1,9 @@
+{
+  "name": "nextleap-credsky",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SkyCred – Live Weather. Check the sky's credit score before you step out. Powered by WeatherAPI.com.",
+  "engines": {
+    "node": ">=18"
+  }
+}
